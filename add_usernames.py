@@ -93,10 +93,11 @@ def run(root_folder_path: str) -> None:
     add_usernames_to_messages_in_directory(clean_root_folder_path, usernames_by_id)
 
 
-parser = argparse.ArgumentParser(description='Add usernames to Slack messages,')
-parser.add_argument('root_path', metavar='P', type=str, help='The path to the folder containing the data dump.')
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Add usernames to Slack messages,')
+    parser.add_argument('root_path', metavar='P', type=str, help='The path to the folder containing the data dump.')
 
-args = parser.parse_args()
+    args = parser.parse_args()
 
-run(args.root_path)
+    run(args.root_path)
 
