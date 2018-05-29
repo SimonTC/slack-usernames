@@ -20,7 +20,7 @@ def load_user_data_from_disk(user_data_path: str) -> json:
 
 
 def extract_usernames(user_data: json) -> dict:
-    """ Extracts the usernames and ids for all the users in the given user data.
+    """ Extract the usernames and ids for all the users in the given user data.
 
     :param user_data: the data containing information about all the slack users.
     :return: a dictionary with user ids as keys and usernames as values.
@@ -36,7 +36,7 @@ def extract_usernames(user_data: json) -> dict:
 
 
 def add_usernames_to_messages_in_directory(root_path: str, usernames_by_id: dict) -> str:
-    """ Goes through the given directory recursively and adds usernames to all the messages stored there.
+    """ Go through the given directory recursively and adds usernames to all the messages stored there.
 
     The updated message files will be saved in a directory called <root_path>_with_names.
     This directory is saved in the parent directory of the root folder.
@@ -66,7 +66,7 @@ def add_usernames_to_messages_in_directory(root_path: str, usernames_by_id: dict
 
 
 def add_usernames_to_messages_in_file(source_file: TextIO, target_file: TextIO, usernames_by_id: dict) -> None:
-    """ Adds usernames to the messages in the source file and saves the file as as the target file.
+    """ Add usernames to the messages in the source file and saves the file as as the target file.
 
     Notes:
      - Messages from bots (not containing any 'user' fields are not included in the output.
@@ -87,7 +87,7 @@ def add_usernames_to_messages_in_file(source_file: TextIO, target_file: TextIO, 
 
 
 def process_data_dump_directory(root_folder_path: str) -> str:
-    """ Goes through the folders in the in directory and adds usernames to all messages.
+    """ Go through the folders in the in directory and adds usernames to all messages.
 
     :param root_folder_path: Path to the folder to process.
     :return: Path to the directory containing the processed messages.
