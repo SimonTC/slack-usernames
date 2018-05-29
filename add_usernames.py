@@ -83,7 +83,7 @@ def add_usernames_to_messages_in_file(source_file: TextIO, target_file: TextIO, 
     json.dump(message_list, target_file)
 
 
-def run(root_folder_path: str) -> None:
+def process_data_dump_directory(root_folder_path: str) -> None:
     clean_root_folder_path = root_folder_path.rstrip(os.sep)
     user_data_path = os.path.join(clean_root_folder_path, 'users.json')
     user_data = load_user_data_from_disk(user_data_path)
@@ -99,5 +99,5 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    run(args.root_path)
+    process_data_dump_directory(args.root_path)
 
