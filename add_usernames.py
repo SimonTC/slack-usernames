@@ -35,13 +35,14 @@ def extract_usernames(user_data: json) -> dict:
     return usernames_by_id
 
 
-def add_usernames_to_messages_in_directory(root_path: str, usernames_by_id: dict) -> None:
+def add_usernames_to_messages_in_directory(root_path: str, usernames_by_id: dict) -> str:
     """ Goes through the given directory recursively and adds usernames to all the messages stored there.
 
     The updated message files will be saved in a directory called <root_path>_with_names.
     This directory is saved in the parent directory of the root folder.
     :param root_path: the path to the root directory.
     :param usernames_by_id: dict containing the usernames identified by user ids.
+    :return: Path to the directory containing the processed messages.
     """
     absolute_root_dir = Path(root_path).absolute()
     target_dir = '{}_with_names'.format(absolute_root_dir)
@@ -60,6 +61,8 @@ def add_usernames_to_messages_in_directory(root_path: str, usernames_by_id: dict
 
         with open(str(path), 'r') as source, open(target_path, 'w') as target:
             add_usernames_to_messages_in_file(source, target, usernames_by_id)
+
+    return target_dir
 
 
 def add_usernames_to_messages_in_file(source_file: TextIO, target_file: TextIO, usernames_by_id: dict) -> None:
@@ -83,14 +86,20 @@ def add_usernames_to_messages_in_file(source_file: TextIO, target_file: TextIO, 
     json.dump(message_list, target_file)
 
 
-def process_data_dump_directory(root_folder_path: str) -> None:
+def process_data_dump_directory(root_folder_path: str) -> str:
+    """ Goes through the folders in the in directory and adds usernames to all messages.
+
+    :param root_folder_path: Path to the folder to process.
+    :return: Path to the directory containing the processed messages.
+    """
     clean_root_folder_path = root_folder_path.rstrip(os.sep)
     user_data_path = os.path.join(clean_root_folder_path, 'users.json')
     user_data = load_user_data_from_disk(user_data_path)
 
     usernames_by_id = extract_usernames(user_data)
 
-    add_usernames_to_messages_in_directory(clean_root_folder_path, usernames_by_id)
+    output_dir = add_usernames_to_messages_in_directory(clean_root_folder_path, usernames_by_id)
+    return output_dir
 
 
 if __name__ == '__main__':
